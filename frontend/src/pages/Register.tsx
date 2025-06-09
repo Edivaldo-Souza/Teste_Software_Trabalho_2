@@ -8,17 +8,38 @@ export default function Register() {
   const [avatar, setAvatar] = useState("");
   const [erroSenha, setErroSenha] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (senha !== confirmarSenha) {
-      setErroSenha("As senhas não coincidem.");
-      return;
+  if (senha !== confirmarSenha) {
+    setErroSenha("As senhas não coincidem.");
+    return;
+  }
+
+  setErroSenha("");
+
+  try {
+    const res = await fetch("http://localhost:8080/v1/users/cadastro", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ login, senha, avatar }),
+    });
+
+    if (res.ok) {
+      alert("Usuário cadastrado com sucesso!");
+      window.location.href = "/login";
+    } else {
+      const erro = await res.text();
+      alert("Erro ao cadastrar: " + erro);
     }
+  } catch (err) {
+    console.error("Erro ao cadastrar", err);
+    alert("Erro ao conectar com o servidor");
+  }
+};
 
-    setErroSenha("");
-    console.log({ login, senha, avatar });
-  };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
