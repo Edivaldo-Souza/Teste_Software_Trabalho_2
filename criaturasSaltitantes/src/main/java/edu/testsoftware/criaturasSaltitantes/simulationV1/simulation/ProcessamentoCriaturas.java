@@ -1,5 +1,6 @@
 package edu.testsoftware.criaturasSaltitantes.simulationV1.simulation;
 
+import edu.testsoftware.criaturasSaltitantes.simulationV1.cluster.Cluster;
 import io.github.libsdl4j.api.event.SDL_Event;
 import io.github.libsdl4j.api.event.events.SDL_TextInputEvent;
 import io.github.libsdl4j.api.render.SDL_Renderer;
@@ -128,7 +129,10 @@ public class ProcessamentoCriaturas {
         while (precisaNovaPosicao) {
             precisaNovaPosicao = false;
             for (int j = 0; j < i; j++) {
-                if (criaturas[i].checkCollison(criaturas[i].getCollisionBox(), criaturas[j].getCollisionBox())) {
+                if (criaturas[i].checkCollison(
+                        criaturas[i].getCollisionBox(),
+                        criaturas[j].getCollisionBox(),
+                        Criatura.MIN_SPACE_BTW_BOXES)) {
                     criaturas[i].setPosX(random.nextInt(WINDOW_WIDTH - Criatura.CRIATURA_LARGURA));
                     criaturas[i].setPosY(random.nextInt(WINDOW_HEIGHT - Criatura.CRIATURA_ALTURA));
                     precisaNovaPosicao = true;
@@ -159,18 +163,33 @@ public class ProcessamentoCriaturas {
             // Colisão e lógica de moedas
             for (int i = 0; i < criaturas.length; i++) {
                 for (int j = 0; j < criaturas.length; j++) {
-                    if (i != j && !criaturas[i].hasCollision && !criaturas[j].hasCollision &&
-                            criaturas[i].checkCollison(criaturas[i].getCollisionBox(), criaturas[j].getCollisionBox())) {
+                  if (i != j &&
+                      !criaturas[i].hasCollision &&
+                      !criaturas[j].hasCollision &&
+                      criaturas[i].checkCollison(
+                            criaturas[i].getCollisionBox(),
+                            criaturas[j].getCollisionBox(),
+                            0)) {
 
-                        tratarColisao(criaturas, i, j);
-                        notRobbedCreatures--;
-
-                        if (notRobbedCreatures == 1) {
-                            SDL_Delay(1000);
-                            shouldRun = false;
-                        }
-                        break;
+                    tratarColisao(criaturas, i, j);
+                    if(criaturas[i].checkCollison(
+                            criaturas[i].getCollisionBox(),
+                            criaturas[j].getCollisionBox(),
+                            0)){
+                        Cluster novoCluster = new Cluster();
+                        novoCluster.setVelX(criaturas[i].getVelX());
+                        novoCluster.setVelY(criaturas[i].getVelY());
+                        novoCluster.addCriatura(criaturas[i]);
+                        novoCluster.addCriatura(criaturas[j]);
                     }
+                    //notRobbedCreatures--;
+
+                    if (notRobbedCreatures == 1) {
+                      SDL_Delay(1000);
+                      shouldRun = false;
+                    }
+                      break;
+                  }
                 }
                 if(SDL_GetTicks()>=tempoExecucao*1000){
                     SDL_ShowSimpleMessageBox(
@@ -218,7 +237,7 @@ public class ProcessamentoCriaturas {
         criaturas[j].setVelY(criaturas[j].getVelY() + dot * dy);
 
         System.out.println("Criatura " + i + " roubou " + criaturas[j].getMoedas() / 2 + " moedas da criatura " + j);
-        criaturas[j].hasCollision = true;
+        //criaturas[j].hasCollision = true;
         criaturas[i].receiveCoins(criaturas[j].giveCoins());
     }
 

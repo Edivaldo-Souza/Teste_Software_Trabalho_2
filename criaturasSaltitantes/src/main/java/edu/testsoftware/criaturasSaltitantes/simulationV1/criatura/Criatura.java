@@ -1,5 +1,6 @@
 package edu.testsoftware.criaturasSaltitantes.simulationV1.criatura;
 
+import edu.testsoftware.criaturasSaltitantes.simulationV1.cluster.Cluster;
 import io.github.libsdl4j.api.rect.SDL_Rect;
 import io.github.libsdl4j.api.render.SDL_Renderer;
 
@@ -11,7 +12,7 @@ import static edu.testsoftware.criaturasSaltitantes.simulationV1.simulation.Proc
 public class Criatura {
     public static final int CRIATURA_LARGURA = 50;
     public static final int CRIATURA_ALTURA = 50;
-    private static final int MIN_SPACE_BTW_BOXES = 0;
+    public static final int MIN_SPACE_BTW_BOXES = 0;
     private SDL_Rect collisionBox;
     public boolean hasCollision;
     public boolean shouldMove;
@@ -22,6 +23,7 @@ public class Criatura {
     private double lastXi;
     private double random;
     private int moedas;
+    public Cluster cluster = null;
 
     public Criatura() {
 
@@ -98,7 +100,7 @@ public class Criatura {
 
     }
 
-    public boolean checkCollison(SDL_Rect rectA, SDL_Rect rectB) {
+    public boolean checkCollison(SDL_Rect rectA, SDL_Rect rectB, int min_space_btw_boxes) {
         int leftA,leftB;
         int rightA,rightB;
         int topA,topB;
@@ -114,19 +116,19 @@ public class Criatura {
         topB = rectB.y;
         bottomB = rectB.y + rectB.h;
 
-        if(bottomA <= topB+MIN_SPACE_BTW_BOXES){
+        if(bottomA <= topB+min_space_btw_boxes){
             return false;
         }
 
-        if(topA >= bottomB+MIN_SPACE_BTW_BOXES){
+        if(topA >= bottomB+min_space_btw_boxes){
             return false;
         }
 
-        if(rightA <= leftB+MIN_SPACE_BTW_BOXES){
+        if(rightA <= leftB+min_space_btw_boxes){
             return false;
         }
 
-        if(leftA >= rightB+MIN_SPACE_BTW_BOXES){
+        if(leftA >= rightB+min_space_btw_boxes){
             return false;
         }
 
