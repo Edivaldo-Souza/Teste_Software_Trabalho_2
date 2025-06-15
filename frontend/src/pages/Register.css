@@ -1,0 +1,106 @@
+/* Container centralizado vertical e horizontalmente, fundo cinza claro */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f4f6; /* cinza claro */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Formulário branco com padding, bordas arredondadas e sombra */
+.register-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 384px; /* 24rem */
+  box-sizing: border-box;
+}
+
+/* Título do formulário, centralizado, fonte maior e negrito */
+.register-form h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #111827; /* cinza escuro */
+}
+
+/* Inputs: largura total, padding, margem entre eles, borda arredondada */
+.register-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #d1d5db; /* cinza claro */
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+/* Borda vermelha caso tenha erro */
+.register-input.error {
+  border-color: #ef4444; /* vermelho */
+}
+
+/* Foco no input muda a borda para verde */
+.register-input:focus {
+  border-color: #10b981; /* verde */
+  box-shadow: 0 0 5px rgba(16,185,129,0.5);
+}
+
+/* Mensagem de erro pequena em vermelho */
+.error-text {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Botão cheio, verde com texto branco, arredondado e hover */
+.register-button {
+  width: 100%;
+  background-color: #10b981; /* verde */
+  color: white;
+  padding: 0.75rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.register-button:hover:not(:disabled) {
+  background-color: #059669; /* verde escuro */
+}
+
+/* Botão desabilitado cinza */
+.register-button:disabled {
+  background-color: #9ca3af; /* cinza */
+  cursor: not-allowed;
+}
+
+/* Parágrafo abaixo do botão, centralizado */
+.register-text {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #4b5563; /* cinza médio */
+}
+
+/* Link verde com underline ao passar mouse */
+.register-link {
+  color: #10b981;
+  text-decoration: none;
+  cursor: pointer;
+  transition: text-decoration 0.2s ease;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
