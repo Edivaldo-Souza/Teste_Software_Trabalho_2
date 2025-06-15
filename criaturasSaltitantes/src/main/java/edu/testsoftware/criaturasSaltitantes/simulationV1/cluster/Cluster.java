@@ -5,27 +5,21 @@ import edu.testsoftware.criaturasSaltitantes.simulationV1.criatura.Criatura;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.testsoftware.criaturasSaltitantes.simulationV1.criatura.Criatura.CRIATURA_ALTURA;
+import static edu.testsoftware.criaturasSaltitantes.simulationV1.criatura.Criatura.CRIATURA_LARGURA;
+import static edu.testsoftware.criaturasSaltitantes.simulationV1.simulation.ProcessamentoCriaturas.WINDOW_HEIGHT;
+import static edu.testsoftware.criaturasSaltitantes.simulationV1.simulation.ProcessamentoCriaturas.WINDOW_WIDTH;
+
 public class Cluster {
-    private List<Criatura> cluster;
+    private List<Criatura> criaturas;
     private float velX, velY;
 
     public Cluster() {
-        cluster = new ArrayList<Criatura>();
-    }
-
-    public void moveCluster(){
-        for(Criatura criatura : cluster){
-            criatura.setVelX(velX);
-            criatura.setVelY(velY);
-            criatura.move();
-        }
+        criaturas = new ArrayList<Criatura>();
     }
 
     public void addCriatura(Criatura criatura){
-        criatura.cluster = this;
-        criatura.setVelX(0);
-        criatura.setVelY(0);
-        cluster.add(criatura);
+        criaturas.add(criatura);
     }
 
     public float getVelX() {
@@ -44,11 +38,11 @@ public class Cluster {
         this.velY = velY;
     }
 
-    public List<Criatura> getCluster() {
-        return cluster;
+    public List<Criatura> getCriaturas() {
+        return criaturas;
     }
 
-    public void setCluster(List<Criatura> cluster) {
-        this.cluster = cluster;
+    public void setCriaturas(List<Criatura> criaturas) {
+        this.criaturas = criaturas;
     }
 }

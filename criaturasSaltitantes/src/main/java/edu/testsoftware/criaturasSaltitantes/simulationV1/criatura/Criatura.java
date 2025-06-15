@@ -24,6 +24,7 @@ public class Criatura {
     private double random;
     private int moedas;
     public Cluster cluster = null;
+    public boolean consumedByCluster;
 
     public Criatura() {
 
@@ -75,6 +76,7 @@ public class Criatura {
 
     public void move() {
 
+        if(consumedByCluster) return;
         // Movimento horizontal constante
         posX += velX;
         collisionBox.x = (int) posX;
@@ -97,6 +99,29 @@ public class Criatura {
         }
 
         collisionBox.y = (int) posY;
+
+        if(cluster!=null && cluster.getCriaturas()!=null && !cluster.getCriaturas().isEmpty()){
+            for(int i = 0; i < cluster.getCriaturas().size(); i++){
+                switch (i) {
+                    case 0:
+                        cluster.getCriaturas().get(i).setPosX(collisionBox.x+CRIATURA_LARGURA);
+                        cluster.getCriaturas().get(i).setPosY(collisionBox.y);
+                        break;
+                    case 1:
+                        cluster.getCriaturas().get(i).setPosX(collisionBox.x);
+                        cluster.getCriaturas().get(i).setPosY(collisionBox.y+CRIATURA_ALTURA);
+                        break;
+                    case 2:
+                        cluster.getCriaturas().get(i).setPosX(collisionBox.x-CRIATURA_LARGURA);
+                        cluster.getCriaturas().get(i).setPosY(collisionBox.y);
+                        break;
+                    case 3:
+                        cluster.getCriaturas().get(i).setPosX(collisionBox.x);
+                        cluster.getCriaturas().get(i).setPosY(collisionBox.y-CRIATURA_ALTURA);
+                        break;
+                }
+            }
+        }
 
     }
 
@@ -165,6 +190,14 @@ public class Criatura {
         this.collisionBox.x = (int) posX;
     }
 
+    public float getPosX(){
+        return this.posX;
+    }
+
+    public float getPosY(){
+        return this.posY;
+    }
+
     public int getMoedas() {
         return moedas;
     }
@@ -179,5 +212,9 @@ public class Criatura {
 
     public double getRandom(){
         return random;
+    }
+
+    public Cluster getCluster() {
+        return cluster;
     }
 }

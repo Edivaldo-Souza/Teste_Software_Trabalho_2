@@ -8,6 +8,8 @@ import io.github.libsdl4j.api.video.SDL_Window;
 import edu.testsoftware.criaturasSaltitantes.simulationV1.criatura.Criatura;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static io.github.libsdl4j.api.Sdl.SDL_Init;
@@ -147,12 +149,17 @@ public class ProcessamentoCriaturas {
         boolean shouldRun = true;
         int frameTime, frameStart;
         int notRobbedCreatures = criaturas.length;
+        boolean shouldCreateCluster = false;
 
         while (shouldRun) {
             frameStart = SDL_GetTicks();
 
+            shouldCreateCluster = !shouldCreateCluster;
+
             while (SDL_PollEvent(evt) != 0) {
                 switch (evt.type) {
+                    case SDL_QUIT:
+                        shouldRun = false;
                 }
             }
 
@@ -171,18 +178,32 @@ public class ProcessamentoCriaturas {
                             criaturas[j].getCollisionBox(),
                             0)) {
 
-                    tratarColisao(criaturas, i, j);
-                    if(criaturas[i].checkCollison(
-                            criaturas[i].getCollisionBox(),
-                            criaturas[j].getCollisionBox(),
-                            0)){
-                        Cluster novoCluster = new Cluster();
-                        novoCluster.setVelX(criaturas[i].getVelX());
-                        novoCluster.setVelY(criaturas[i].getVelY());
-                        novoCluster.addCriatura(criaturas[i]);
-                        novoCluster.addCriatura(criaturas[j]);
-                    }
-                    //notRobbedCreatures--;
+                      if (criaturas[i].getCluster() == null && criaturas[j].getCluster() == null) {
+                          Cluster novoCluster = new Cluster();
+                          criaturas[j].hasCollision = true;
+                          criaturas[j].consumedByCluster = true;
+                          novoCluster.addCriatura(criaturas[j]);
+                          criaturas[i].cluster = novoCluster;
+                      } else if (criaturas[i].getCluster() != null && criaturas[j].getCluster() == null) {
+                          if(criaturas[i].getCluster().getCriaturas().size()<4){
+                              criaturas[j].hasCollision = true;
+                              criaturas[j].consumedByCluster = true;
+                              criaturas[i].getCluster().addCriatura(criaturas[j]);
+                          }
+                      } else if (criaturas[i].getCluster() == null && criaturas[j].getCluster() != null) {
+                          if(criaturas[j].getCluster().getCriaturas().size()<4) {
+                              criaturas[i].hasCollision = true;
+                              criaturas[i].consumedByCluster = true;
+                              criaturas[j].getCluster().addCriatura(criaturas[i]);
+                          }
+                      }
+                      else if(criaturas[i].getCluster()!=criaturas[j].getCluster()){
+                          tratarColisao(criaturas, i, j);
+                      }
+                      else{
+                          tratarColisao(criaturas, i, j);
+                      }
+                    notRobbedCreatures--;
 
                     if (notRobbedCreatures == 1) {
                       SDL_Delay(1000);
@@ -236,8 +257,9 @@ public class ProcessamentoCriaturas {
         criaturas[j].setVelX(criaturas[j].getVelX() + dot * dx);
         criaturas[j].setVelY(criaturas[j].getVelY() + dot * dy);
 
+
         System.out.println("Criatura " + i + " roubou " + criaturas[j].getMoedas() / 2 + " moedas da criatura " + j);
-        //criaturas[j].hasCollision = true;
+        criaturas[j].hasCollision = true;
         criaturas[i].receiveCoins(criaturas[j].giveCoins());
     }
 
