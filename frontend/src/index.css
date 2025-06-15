@@ -1,5 +1,120 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Container centralizado vertical e horizontalmente, fundo cinza */
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f4f6; /* bg-gray-100 */
+}
+
+/* Formulário branco com padding, borda arredondada e sombra */
+.form-box {
+  background-color: white;
+  padding: 2rem; /* 32px */
+  border-radius: 1rem; /* 16px */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 24rem; /* 384px */
+}
+
+/* Título do formulário centralizado e com tamanho maior */
+.form-title {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 700;
+  margin-bottom: 1.5rem; /* 24px */
+  text-align: center;
+}
+
+/* Inputs com largura total, padding, margem e borda arredondada */
+.form-input {
+  width: 100%;
+  padding: 0.75rem; /* 12px */
+  margin-bottom: 1rem; /* 16px */
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 0.5rem; /* 8px */
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Borda vermelha para erro */
+.form-input-error {
+  border-color: #ef4444; /* red-500 */
+}
+
+/* Texto de erro vermelho, menor e com margem */
+.error-text {
+  color: #ef4444;
+  font-size: 0.875rem; /* 14px */
+  margin-bottom: 0.5rem; /* 8px */
+}
+
+/* Botão azul para login */
+.btn-login {
+  width: 100%;
+  background-color: #3b82f6; /* blue-500 */
+  color: white;
+  padding: 0.75rem; /* 12px */
+  border-radius: 0.5rem; /* 8px */
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-login:hover {
+  background-color: #2563eb; /* blue-600 */
+}
+
+/* Botão verde para cadastro */
+.btn-register {
+  width: 100%;
+  background-color: #22c55e; /* green-500 */
+  color: white;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-register:hover {
+  background-color: #16a34a; /* green-600 */
+}
+
+.btn-register:disabled {
+  background-color: #9ca3af; /* gray-400 */
+  cursor: not-allowed;
+}
+
+/* Parágrafo com texto centralizado e margem superior */
+.text-center {
+  text-align: center;
+  margin-top: 1rem; /* 16px */
+}
+
+/* Link com cor azul/verde e underline ao passar o mouse */
+.link-login {
+  color: #3b82f6;
+  text-decoration: none;
+  cursor: pointer;
+  transition: text-decoration 0.2s ease;
+}
+
+.link-login:hover {
+  text-decoration: underline;
+}
+
+.link-register {
+  color: #22c55e;
+  text-decoration: none;
+  cursor: pointer;
+  transition: text-decoration 0.2s ease;
+}
+
+.link-register:hover {
+  text-decoration: underline;
+}
 
 

@@ -40,9 +40,10 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody UsuarioLoginDTO dto) {
         Optional<Usuario> sucesso = usuarioService.autenticar(dto);
         if (sucesso.isPresent()) {
-            return ResponseEntity.ok("Login bem-sucedido");
+            return ResponseEntity.ok(sucesso.get()); // ✅ retorna objeto
         } else {
             return ResponseEntity.status(401).body("Credenciais inválidas");
         }
     }
+
 }

@@ -1,0 +1,88 @@
+/* Container centralizado vertical e horizontalmente, fundo cinza claro */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f4f6; /* cinza claro */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Formulário branco com padding, bordas arredondadas e sombra */
+.login-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 384px; /* 24rem */
+  box-sizing: border-box;
+}
+
+/* Título do formulário, centralizado, fonte maior e negrito */
+.login-form h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #111827; /* cinza escuro */
+}
+
+/* Inputs: largura total, padding, margem entre eles, borda arredondada */
+.login-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #d1d5db; /* cinza claro */
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+/* Foco no input muda a borda para azul */
+.login-input:focus {
+  border-color: #3b82f6; /* azul */
+  box-shadow: 0 0 5px rgba(59,130,246,0.5);
+}
+
+/* Botão cheio, azul com texto branco, arredondado e hover */
+.login-button {
+  width: 100%;
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.75rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.login-button:hover {
+  background-color: #2563eb;
+}
+
+/* Parágrafo abaixo do botão, centralizado */
+.login-text {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #4b5563; /* cinza médio */
+}
+
+/* Link azul com underline ao passar mouse */
+.login-link {
+  color: #3b82f6;
+  text-decoration: none;
+  cursor: pointer;
+  transition: text-decoration 0.2s ease;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
