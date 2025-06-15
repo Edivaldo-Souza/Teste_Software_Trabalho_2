@@ -13,13 +13,31 @@ import static edu.testsoftware.criaturasSaltitantes.simulationV1.simulation.Proc
 public class Cluster {
     private List<Criatura> criaturas;
     private float velX, velY;
+    private int moedasDoCluster;
 
     public Cluster() {
-        criaturas = new ArrayList<Criatura>();
+        criaturas = new ArrayList<>();
     }
 
     public void addCriatura(Criatura criatura){
         criaturas.add(criatura);
+    }
+
+    public int getMoedasDoCluster() {
+        return moedasDoCluster;
+    }
+
+    public void setMoedasDoCluster(int moedasDoCluster) {
+        this.moedasDoCluster = moedasDoCluster;
+    }
+
+    public void receiveCoins(int quantidadeMoedas){
+        this.moedasDoCluster += quantidadeMoedas;
+    }
+
+    public int giveCoins(){
+        this.moedasDoCluster/=2;
+        return moedasDoCluster;
     }
 
     public float getVelX() {

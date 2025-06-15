@@ -125,6 +125,33 @@ public class Criatura {
 
     }
 
+    public boolean checkClusterColision(Criatura criaturaA, Criatura criaturaB) {
+        if(criaturaA.getCluster()!=null && criaturaB.getCluster()==null){
+            for(Criatura criaturaDoClusterA : criaturaA.getCluster().getCriaturas()){
+                if(checkCollison(criaturaDoClusterA.getCollisionBox(),criaturaB.getCollisionBox(),0)){
+                    return true;
+                }
+            }
+        }
+        else if(criaturaA.getCluster()==null && criaturaB.getCluster()!=null){
+            for(Criatura criaturaDoClusterB : criaturaB.getCluster().getCriaturas()){
+                if(checkCollison(criaturaDoClusterB.getCollisionBox(),criaturaA.getCollisionBox(),0)){
+                    return true;
+                }
+            }
+        }
+        else if(criaturaA.getCluster()!=criaturaB.getCluster()){
+            for(Criatura criaturaDoClusterA : criaturaA.getCluster().getCriaturas()){
+                for(Criatura criaturaDoClusterB : criaturaB.getCluster().getCriaturas()){
+                    if(checkCollison(criaturaDoClusterA.getCollisionBox(),criaturaDoClusterB.getCollisionBox(),0)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return checkCollison(criaturaA.getCollisionBox(),criaturaB.getCollisionBox(),0);
+    }
+
     public boolean checkCollison(SDL_Rect rectA, SDL_Rect rectB, int min_space_btw_boxes) {
         int leftA,leftB;
         int rightA,rightB;

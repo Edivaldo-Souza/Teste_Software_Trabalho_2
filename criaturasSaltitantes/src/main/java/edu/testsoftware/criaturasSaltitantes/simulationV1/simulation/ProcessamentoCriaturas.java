@@ -119,7 +119,6 @@ public class ProcessamentoCriaturas {
             c.move();
             c.hasCollision = false;
         }
-        criaturas[0].shouldMove = true;
 
         return criaturas;
     }
@@ -153,6 +152,7 @@ public class ProcessamentoCriaturas {
 
         while (shouldRun) {
             frameStart = SDL_GetTicks();
+            notRobbedCreatures = 0;
 
             shouldCreateCluster = !shouldCreateCluster;
 
@@ -173,28 +173,30 @@ public class ProcessamentoCriaturas {
                   if (i != j &&
                       !criaturas[i].hasCollision &&
                       !criaturas[j].hasCollision &&
-                      criaturas[i].checkCollison(
-                            criaturas[i].getCollisionBox(),
-                            criaturas[j].getCollisionBox(),
-                            0)) {
+                      criaturas[i].checkClusterColision(
+                            criaturas[i],
+                            criaturas[j])) {
 
-                      if (criaturas[i].getCluster() == null && criaturas[j].getCluster() == null) {
+                      if (criaturas[i].getCluster() == null && criaturas[j].getCluster() == null && shouldCreateCluster) {
                           Cluster novoCluster = new Cluster();
                           criaturas[j].hasCollision = true;
                           criaturas[j].consumedByCluster = true;
                           novoCluster.addCriatura(criaturas[j]);
+                          novoCluster.setMoedasDoCluster(criaturas[i].getMoedas()+criaturas[j].getMoedas());
                           criaturas[i].cluster = novoCluster;
-                      } else if (criaturas[i].getCluster() != null && criaturas[j].getCluster() == null) {
+                      } else if (criaturas[i].getCluster() != null && criaturas[j].getCluster() == null && shouldCreateCluster) {
                           if(criaturas[i].getCluster().getCriaturas().size()<4){
                               criaturas[j].hasCollision = true;
                               criaturas[j].consumedByCluster = true;
                               criaturas[i].getCluster().addCriatura(criaturas[j]);
+                              criaturas[i].getCluster().receiveCoins(criaturas[j].getMoedas());
                           }
-                      } else if (criaturas[i].getCluster() == null && criaturas[j].getCluster() != null) {
+                      } else if (criaturas[i].getCluster() == null && criaturas[j].getCluster() != null && shouldCreateCluster) {
                           if(criaturas[j].getCluster().getCriaturas().size()<4) {
                               criaturas[i].hasCollision = true;
                               criaturas[i].consumedByCluster = true;
                               criaturas[j].getCluster().addCriatura(criaturas[i]);
+                              criaturas[j].getCluster().receiveCoins(criaturas[i].getMoedas());
                           }
                       }
                       else if(criaturas[i].getCluster()!=criaturas[j].getCluster()){
@@ -203,7 +205,13 @@ public class ProcessamentoCriaturas {
                       else{
                           tratarColisao(criaturas, i, j);
                       }
-                    notRobbedCreatures--;
+
+                    //notRobbedCreatures--;
+                    for(Criatura c : criaturas) {
+                        if(!c.hasCollision){
+                            notRobbedCreatures++;
+                        }
+                    }
 
                     if (notRobbedCreatures == 1) {
                       SDL_Delay(1000);
@@ -260,7 +268,17 @@ public class ProcessamentoCriaturas {
 
         System.out.println("Criatura " + i + " roubou " + criaturas[j].getMoedas() / 2 + " moedas da criatura " + j);
         criaturas[j].hasCollision = true;
-        criaturas[i].receiveCoins(criaturas[j].giveCoins());
+        int tempQuantidadeMoedas = criaturas[j].giveCoins();
+
+
+        if(criaturas[i].getCluster()!=null && criaturas[j].getCluster()!=null){
+            tempQuantidadeMoedas = criaturas[j].getCluster().giveCoins();
+            criaturas[i].getCluster().receiveCoins(tempQuantidadeMoedas);
+        }
+        if(criaturas[i].getCluster()!=null && criaturas[j].getCluster()==null){
+            criaturas[i].getCluster().receiveCoins(tempQuantidadeMoedas);
+        }
+        else criaturas[i].receiveCoins(tempQuantidadeMoedas);
     }
 
     private static void mostrarResultadosFinais(Criatura[] criaturas) {
@@ -274,7 +292,14 @@ public class ProcessamentoCriaturas {
                     .append(dc.format(criaturas[i].getLastXi())).append(" + ")
                     .append(dc.format(criaturas[i].getRandom())).append(" * ")
                     .append(dc.format(criaturas[i].getMoedas())).append(" = ")
-                    .append(dc.format(criaturas[i].getXi())).append("\n\n");
+                    .append(dc.format(criaturas[i].getXi())).append("\n");
+
+            if(criaturas[i].getCluster()!=null){
+                stb.append("Quantidade de moedas do cluster: ")
+                   .append(criaturas[i].getCluster().getMoedasDoCluster())
+                   .append("\n");
+            }
+            stb.append("\n");
         }
 
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", stb.toString(), null);
