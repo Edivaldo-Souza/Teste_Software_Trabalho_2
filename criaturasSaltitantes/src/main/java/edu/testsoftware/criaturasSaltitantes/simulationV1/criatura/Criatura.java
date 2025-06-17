@@ -18,13 +18,14 @@ public class Criatura {
     public boolean shouldMove;
     private float velX, velY;
     private float posX, posY;
-    private byte r, g, b, a;
+    public byte r, g, b, a;
     private double xi;
     private double lastXi;
     private double random;
     private int moedas;
     public Cluster cluster = null;
     public boolean consumedByCluster;
+    public boolean guardiao;
 
     public Criatura() {
 
@@ -48,7 +49,7 @@ public class Criatura {
     }
     public void render(SDL_Renderer renderer){
         SDL_SetRenderDrawColor(renderer, r,g,b,a);
-        if(!hasCollision){
+        if(!hasCollision || consumedByCluster){
             SDL_RenderFillRect(renderer, collisionBox);
         }
         else{
