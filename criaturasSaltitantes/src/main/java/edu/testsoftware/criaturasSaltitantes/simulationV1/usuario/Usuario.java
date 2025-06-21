@@ -2,6 +2,9 @@ package edu.testsoftware.criaturasSaltitantes.simulationV1.usuario;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Usuario {
 
@@ -31,6 +34,26 @@ public class Usuario {
         this.avatar = avatar;
         this.pontuacao = pontuacao;
     }
+
+    // Lista para guardar todas as pontuações ou resultados
+    @ElementCollection
+    @CollectionTable(name = "usuario_pontuacoes", joinColumns = @JoinColumn(name = "usuario_id"))
+    @Column(name = "pontuacao_resultado")
+    private List<Double> historicoPontuacoes = new ArrayList<>();
+
+    // Getters e Setters
+    public List<Double> getHistoricoPontuacoes() {
+        return historicoPontuacoes;
+    }
+
+    public void setHistoricoPontuacoes(List<Double> historicoPontuacoes) {
+        this.historicoPontuacoes = historicoPontuacoes;
+    }
+
+    public void adicionarPontuacao(Double pontuacao) {
+        this.historicoPontuacoes.add(pontuacao);
+    }
+
 
     // Getters e Setters
 

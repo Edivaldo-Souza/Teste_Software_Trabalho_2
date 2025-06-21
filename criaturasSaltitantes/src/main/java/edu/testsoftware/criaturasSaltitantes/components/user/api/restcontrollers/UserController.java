@@ -1,5 +1,7 @@
 package edu.testsoftware.criaturasSaltitantes.components.user.api.restcontrollers;
 
+import edu.testsoftware.criaturasSaltitantes.simulationV1.criatura.Criatura;
+import edu.testsoftware.criaturasSaltitantes.simulationV1.criatura.CriaturaService;
 import edu.testsoftware.criaturasSaltitantes.simulationV1.simulation.ProcessamentoCriaturas;
 import edu.testsoftware.criaturasSaltitantes.simulationV1.usuario.Usuario;
 import edu.testsoftware.criaturasSaltitantes.simulationV1.usuario.UsuarioCadastroDTO;
@@ -11,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static io.github.libsdl4j.api.SdlSubSystemConst.SDL_INIT_EVERYTHING;
-
 @RestController
 @RequestMapping("v1/users")
 @CrossOrigin(origins = "*")
@@ -20,6 +20,16 @@ public class UserController {
     @PostMapping
     public void post(){
         ProcessamentoCriaturas.processamento(10,60);
+    }
+
+    @Autowired
+    private CriaturaService criaturaService;
+
+    @PostMapping("/processamento/{userId}")
+    public ResponseEntity<?> processarCriaturas(@PathVariable Long userId) {
+        Criatura[] criaturas = ProcessamentoCriaturas.processamento(10, 60);
+        criaturaService.postProcessamentoCriatura(userId, criaturas);
+        return ResponseEntity.ok("Resultados salvos para o usuario " + userId);
     }
 
 

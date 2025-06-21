@@ -1,0 +1,24 @@
+2025-06-21 13:11:51.421064-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+select u1_0.id,u1_0.avatar,u1_0.login,u1_0.pontuacao,u1_0.senha from usuario u1_0 where u1_0.login=? [42104-232]
+2025-06-21 13:11:54.906786-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+select u1_0.id,u1_0.avatar,u1_0.login,u1_0.pontuacao,u1_0.senha from usuario u1_0 where u1_0.login=? [42104-232]
+2025-06-21 13:12:01.870766-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+insert into usuario (avatar,login,pontuacao,senha,id) values (?,?,?,?,default) [42104-232]
+2025-06-21 13:12:03.970098-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+insert into usuario (avatar,login,pontuacao,senha,id) values (?,?,?,?,default) [42104-232]
+2025-06-21 13:12:09.380756-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+select u1_0.id,u1_0.avatar,u1_0.login,u1_0.pontuacao,u1_0.senha from usuario u1_0 where u1_0.login=? [42104-232]
+2025-06-21 13:12:10.305445-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+select u1_0.id,u1_0.avatar,u1_0.login,u1_0.pontuacao,u1_0.senha from usuario u1_0 where u1_0.login=? [42104-232]
+2025-06-21 13:13:31.721418-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+select u1_0.id,u1_0.avatar,u1_0.login,u1_0.pontuacao,u1_0.senha from usuario u1_0 where u1_0.login=? [42104-232]
+2025-06-21 13:13:33.545756-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIO" not found (this database is empty); SQL statement:
+select u1_0.id,u1_0.avatar,u1_0.login,u1_0.pontuacao,u1_0.senha from usuario u1_0 where u1_0.login=? [42104-232]
