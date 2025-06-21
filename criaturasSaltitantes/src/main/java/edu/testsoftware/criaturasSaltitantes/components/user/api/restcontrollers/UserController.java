@@ -26,6 +26,7 @@ public class UserController {
     @Autowired
     private UsuarioService usuarioService;
 
+
     @PostMapping("/cadastro")
     public ResponseEntity<?> cadastrar(@RequestBody UsuarioCadastroDTO dto) {
         try {
@@ -40,7 +41,7 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody UsuarioLoginDTO dto) {
         Optional<Usuario> sucesso = usuarioService.autenticar(dto);
         if (sucesso.isPresent()) {
-            return ResponseEntity.ok(sucesso.get()); // ✅ retorna objeto
+            return ResponseEntity.ok(sucesso.get());
         } else {
             return ResponseEntity.status(401).body("Credenciais inválidas");
         }
