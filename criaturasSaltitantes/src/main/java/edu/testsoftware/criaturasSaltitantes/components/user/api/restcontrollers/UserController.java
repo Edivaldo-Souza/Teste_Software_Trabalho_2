@@ -3,14 +3,13 @@ package edu.testsoftware.criaturasSaltitantes.components.user.api.restcontroller
 import edu.testsoftware.criaturasSaltitantes.simulationV1.criatura.Criatura;
 import edu.testsoftware.criaturasSaltitantes.simulationV1.criatura.CriaturaService;
 import edu.testsoftware.criaturasSaltitantes.simulationV1.simulation.ProcessamentoCriaturas;
-import edu.testsoftware.criaturasSaltitantes.simulationV1.usuario.Usuario;
-import edu.testsoftware.criaturasSaltitantes.simulationV1.usuario.UsuarioCadastroDTO;
-import edu.testsoftware.criaturasSaltitantes.simulationV1.usuario.UsuarioLoginDTO;
-import edu.testsoftware.criaturasSaltitantes.simulationV1.usuario.UsuarioService;
+import edu.testsoftware.criaturasSaltitantes.simulationV1.usuario.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,11 +24,41 @@ public class UserController {
     @Autowired
     private CriaturaService criaturaService;
 
-    @PostMapping("/processamento/{userId}")
-    public ResponseEntity<?> processarCriaturas(@PathVariable Long userId) {
-        Criatura[] criaturas = ProcessamentoCriaturas.processamento(10, 60);
+    @PostMapping("/processamento/{userId}/{quantidadeCriaturas}/{tempo}")
+    public ResponseEntity<?> processarCriaturas(
+            @PathVariable("userId") Long userId,
+            @PathVariable("quantidadeCriaturas") Integer quantidadeCriaturas,
+            @PathVariable("tempo") Integer tempoSegundos) {
+        Criatura[] criaturas = ProcessamentoCriaturas.processamento(quantidadeCriaturas, tempoSegundos);
         criaturaService.postProcessamentoCriatura(userId, criaturas);
         return ResponseEntity.ok("Resultados salvos para o usuario " + userId);
+    }
+
+    @GetMapping
+    public ResponseEntity<EstatisticaDTO> getEstatisticas(){
+        List<Usuario> usuarios = usuarioService.listar();
+        List<UsuarioBuscadoDTO> usuariosBuscadosDTO = new ArrayList<>();
+        int totalSimulacoes = 0;
+        int totalSimulacoesBemSucedidas = 0;
+        for(Usuario usuario : usuarios){
+            UsuarioBuscadoDTO usuarioBuscadoDTO = new UsuarioBuscadoDTO();
+            usuarioBuscadoDTO.setPontuacao(usuario.getHistoricoPontuacoes().getLast());
+            usuarioBuscadoDTO.setAvatar(usuario.getAvatar());
+            usuarioBuscadoDTO.setMediaSimulacoesBemSucedidas(usuario.getMediaSimulacoesBemSucedidas());
+            usuarioBuscadoDTO.setQuantidadeSimulacoes(usuario.getQuantidadeSimulacoes());
+
+            totalSimulacoes += usuario.getQuantidadeSimulacoes();
+            totalSimulacoesBemSucedidas += usuario.getQuantidadeSimulacoesBemSucedidas();
+
+            usuariosBuscadosDTO.add(usuarioBuscadoDTO);
+
+        }
+        EstatisticaDTO estatisticaDTO = new EstatisticaDTO();
+        estatisticaDTO.setUsuarios(usuariosBuscadosDTO);
+        estatisticaDTO.setQuantidadeSimulacoes(totalSimulacoes);
+        estatisticaDTO.setMediaSimulacoesBemSucedidas((float) totalSimulacoesBemSucedidas /totalSimulacoes);
+
+        return ResponseEntity.ok(estatisticaDTO);
     }
 
 

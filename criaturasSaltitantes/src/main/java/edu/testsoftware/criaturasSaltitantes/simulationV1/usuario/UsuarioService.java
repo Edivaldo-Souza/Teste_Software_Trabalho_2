@@ -39,28 +39,12 @@ public class UsuarioService {
         return Optional.empty();
     }
 
-    public Usuario atualizarUsuario(Long id, int simulacaoBemSucedida){
-        Optional<Usuario> usuarioOptional = repository.findById(id);
-        if(usuarioOptional.isEmpty()) {
-            return null;
-        }
-        if(simulacaoBemSucedida == 1){
-            int quantidadeAtualDeSimulacoesBemSucedidas = usuarioOptional.get().getQuantidadeSimulacoesBemSucedidas();
-            usuarioOptional.get().setQuantidadeSimulacoesBemSucedidas(quantidadeAtualDeSimulacoesBemSucedidas + 1);
-        }
-        usuarioOptional.get().setQuantidadeSimulacoes(
-                usuarioOptional.get().getQuantidadeSimulacoes() + 1
-        );
-
-        usuarioOptional.get().setMediaSimulacoesBemSucedidas(
-                usuarioOptional.get().getMediaSimulacoesBemSucedidas()/usuarioOptional.get().getQuantidadeSimulacoes()
-        );
-
-        return repository.save(usuarioOptional.get());
-    }
-
     public Usuario salvar(Usuario usuario) {
         return repository.save(usuario);
+    }
+
+    public List<Usuario> listar() {
+        return repository.findAll();
     }
 }
 

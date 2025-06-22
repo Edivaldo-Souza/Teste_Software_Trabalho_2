@@ -2,7 +2,8 @@ package edu.testsoftware.criaturasSaltitantes.simulationV1.usuario;
 
 public class UsuarioBuscadoDTO {
     private String avatar;
-    private int quantidadeSimulacoesBemSucedidas;
+    private double pontuacao;
+    private int quantidadeSimulacoes;
     private float mediaSimulacoesBemSucedidas;
 
     public String getAvatar() {
@@ -13,12 +14,20 @@ public class UsuarioBuscadoDTO {
         this.avatar = avatar;
     }
 
-    public int getQuantidadeSimulacoesBemSucedidas() {
-        return quantidadeSimulacoesBemSucedidas;
+    public double getPontuacao() {
+        return pontuacao;
     }
 
-    public void setQuantidadeSimulacoesBemSucedidas(int quantidadeSimulacoesBemSucedidas) {
-        this.quantidadeSimulacoesBemSucedidas = quantidadeSimulacoesBemSucedidas;
+    public void setPontuacao(double pontuacao) {
+        this.pontuacao = pontuacao;
+    }
+
+    public int getQuantidadeSimulacoes() {
+        return quantidadeSimulacoes;
+    }
+
+    public void setQuantidadeSimulacoes(int quantidadeSimulacoes) {
+        this.quantidadeSimulacoes = quantidadeSimulacoes;
     }
 
     public float getMediaSimulacoesBemSucedidas() {

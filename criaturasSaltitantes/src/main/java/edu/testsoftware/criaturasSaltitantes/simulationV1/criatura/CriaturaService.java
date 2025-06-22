@@ -22,10 +22,27 @@ public class CriaturaService {
 
         Usuario usuario = usuarioOpt.get();
 
+        boolean simulacaoBemSucedida = true;
+        int quantidadeDeCriaturasRestantes = criaturas.length;
         // Salva todas as moedas das criaturas
         for (Criatura criatura : criaturas) {
+            if(criatura.hasCollision){
+                quantidadeDeCriaturasRestantes--;
+            }
             usuario.adicionarPontuacao((double) criatura.getMoedas());
         }
+
+        if(quantidadeDeCriaturasRestantes == 1){
+            usuario.setQuantidadeSimulacoesBemSucedidas(
+                    usuario.getQuantidadeSimulacoesBemSucedidas() + 1
+            );
+        }
+
+        usuario.setQuantidadeSimulacoes(usuario.getQuantidadeSimulacoes() + 1);
+        usuario.setMediaSimulacoesBemSucedidas(
+                (float) usuario.getQuantidadeSimulacoesBemSucedidas() /usuario.getQuantidadeSimulacoes()
+        );
+
 
         // Salva a média (opcional)
         double media = Arrays.stream(criaturas).mapToDouble(Criatura::getMoedas).average().orElse(0.0);
