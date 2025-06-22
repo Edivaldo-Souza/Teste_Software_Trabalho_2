@@ -27,6 +27,10 @@ public class Criatura {
     public boolean consumedByCluster;
     public boolean guardiao;
 
+    public void setMoedas(int moedas) {
+        this.moedas = moedas;
+    }
+
     public Criatura() {
 
     }
