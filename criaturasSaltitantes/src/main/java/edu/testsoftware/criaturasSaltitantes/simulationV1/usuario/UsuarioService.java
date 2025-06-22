@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,6 +40,26 @@ public class UsuarioService {
         }
 
         return Optional.empty();
+    }
+
+    public Usuario atualizarUsuario(Long id, int simulacaoBemSucedida){
+        Optional<Usuario> usuarioOptional = repository.findById(id);
+        if(usuarioOptional.isEmpty()) {
+            return null;
+        }
+        if(simulacaoBemSucedida == 1){
+            int quantidadeAtualDeSimulacoesBemSucedidas = usuarioOptional.get().getQuantidadeSimulacoesBemSucedidas();
+            usuarioOptional.get().setQuantidadeSimulacoesBemSucedidas(quantidadeAtualDeSimulacoesBemSucedidas + 1);
+        }
+        usuarioOptional.get().setQuantidadeSimulacoes(
+                usuarioOptional.get().getQuantidadeSimulacoes() + 1
+        );
+
+        usuarioOptional.get().setMediaSimulacoesBemSucedidas(
+                usuarioOptional.get().getMediaSimulacoesBemSucedidas()/usuarioOptional.get().getQuantidadeSimulacoes()
+        );
+
+        return repository.save(usuarioOptional.get());
     }
 }
 

@@ -192,8 +192,7 @@ public class ProcessamentoCriaturas {
                             criaturas[i],
                             criaturas[j])) {
 
-                      if (criaturas[i].getCluster() == null && criaturas[j].getCluster() == null &&
-                              shouldCreateCluster && !criaturas[j].guardiao) {
+                      if (criaturas[i].getCluster() == null && criaturas[j].getCluster() == null  && !criaturas[j].guardiao) {
                           Cluster novoCluster = new Cluster();
                           criaturas[j].hasCollision = true;
                           criaturas[j].consumedByCluster = true;
@@ -201,21 +200,21 @@ public class ProcessamentoCriaturas {
                           novoCluster.setMoedasDoCluster(criaturas[i].getMoedas()+criaturas[j].getMoedas());
                           criaturas[i].cluster = novoCluster;
                       } else if (criaturas[i].getCluster() != null && criaturas[j].getCluster() == null
-                              && shouldCreateCluster && !criaturas[j].guardiao) {
-                          if(criaturas[i].getCluster().getCriaturas().size()<4){
+                              && !criaturas[j].guardiao) {
+                          //if(criaturas[i].getCluster().getCriaturas().size()<4){
                               criaturas[j].hasCollision = true;
                               criaturas[j].consumedByCluster = true;
                               criaturas[i].getCluster().addCriatura(criaturas[j]);
                               criaturas[i].getCluster().receiveCoins(criaturas[j].getMoedas());
-                          }
+                          //}
                       } else if (criaturas[i].getCluster() == null && criaturas[j].getCluster() != null
-                              && shouldCreateCluster && !criaturas[i].guardiao) {
-                          if(criaturas[j].getCluster().getCriaturas().size()<4) {
+                              && !criaturas[i].guardiao) {
+                          //if(criaturas[j].getCluster().getCriaturas().size()<4) {
                               criaturas[i].hasCollision = true;
                               criaturas[i].consumedByCluster = true;
                               criaturas[j].getCluster().addCriatura(criaturas[i]);
                               criaturas[j].getCluster().receiveCoins(criaturas[i].getMoedas());
-                          }
+                          //}
                       }
                       else if(criaturas[i].getCluster()!=criaturas[j].getCluster()){
                           tratarColisao(criaturas, i, j);

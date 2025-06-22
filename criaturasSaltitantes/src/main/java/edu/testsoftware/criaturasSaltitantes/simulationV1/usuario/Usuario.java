@@ -17,6 +17,10 @@ public class Usuario {
 
     private String avatar;
 
+    private int quantidadeSimulacoesBemSucedidas = 0;
+    private float mediaSimulacoesBemSucedidas = 0;
+    private int quantidadeSimulacoes;
+
     private int pontuacao = 0;
 
     // Construtor vazio (obrigatório para JPA)
@@ -83,5 +87,29 @@ public class Usuario {
                 ", avatar='" + avatar + '\'' +
                 ", pontuacao=" + pontuacao +
                 '}';
+    }
+
+    public int getQuantidadeSimulacoesBemSucedidas() {
+        return quantidadeSimulacoesBemSucedidas;
+    }
+
+    public void setQuantidadeSimulacoesBemSucedidas(int quantidadeSimulacoesBemSucedidas) {
+        this.quantidadeSimulacoesBemSucedidas = quantidadeSimulacoesBemSucedidas;
+    }
+
+    public float getMediaSimulacoesBemSucedidas() {
+        return mediaSimulacoesBemSucedidas;
+    }
+
+    public void setMediaSimulacoesBemSucedidas(float mediaSimulacoesBemSucedidas) {
+        this.mediaSimulacoesBemSucedidas = mediaSimulacoesBemSucedidas;
+    }
+
+    public int getQuantidadeSimulacoes() {
+        return quantidadeSimulacoes;
+    }
+
+    public void setQuantidadeSimulacoes(int quantidadeSimulacoes) {
+        this.quantidadeSimulacoes = quantidadeSimulacoes;
     }
 }
