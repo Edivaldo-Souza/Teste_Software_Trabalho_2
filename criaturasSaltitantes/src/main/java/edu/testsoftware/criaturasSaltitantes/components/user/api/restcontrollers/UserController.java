@@ -3,6 +3,7 @@ package edu.testsoftware.criaturasSaltitantes.components.user.api.restcontroller
 import edu.testsoftware.criaturasSaltitantes.simulationV1.criatura.Criatura;
 import edu.testsoftware.criaturasSaltitantes.simulationV1.criatura.CriaturaService;
 import edu.testsoftware.criaturasSaltitantes.simulationV1.simulation.ProcessamentoCriaturas;
+import edu.testsoftware.criaturasSaltitantes.simulationV1.simulation.RespostaProcessamento;
 import edu.testsoftware.criaturasSaltitantes.simulationV1.usuario.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,8 @@ public class UserController {
             @PathVariable("userId") Long userId,
             @PathVariable("quantidadeCriaturas") Integer quantidadeCriaturas,
             @PathVariable("tempo") Integer tempoSegundos) {
-        Criatura[] criaturas = ProcessamentoCriaturas.processamento(quantidadeCriaturas, tempoSegundos);
-        criaturaService.postProcessamentoCriatura(userId, criaturas);
+        RespostaProcessamento respostaProcessamento = ProcessamentoCriaturas.processamento(quantidadeCriaturas, tempoSegundos);
+        criaturaService.postProcessamentoCriatura(userId, respostaProcessamento.getCriaturas());
         return ResponseEntity.ok("Resultados salvos para o usuario " + userId);
     }
 

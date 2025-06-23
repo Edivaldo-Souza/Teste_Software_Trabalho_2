@@ -37,14 +37,17 @@ public class ProcessamentoCriaturas {
     public static final int FPS = 60;
     public static final int FRAME_DELAY = 1000/FPS;
 
-    public static Criatura[] processamento(int quantidadeCriaturas, int tempoExecucao) {
+    public static RespostaProcessamento processamento(int quantidadeCriaturas, int tempoExecucao) {
+        RespostaProcessamento respostaProcessamento = new RespostaProcessamento();
+
         if (quantidadeCriaturas < 2) {
             SDL_ShowSimpleMessageBox(
                     SDL_MESSAGEBOX_INFORMATION,
                     "Info",
                     "Quantidade de criaturas inferior ao necessário. Mínimo: 2 criaturas",
                     null);
-            return null;
+            respostaProcessamento.setStatus(0);
+            return respostaProcessamento;
         }
         if (quantidadeCriaturas > 200) {
             SDL_ShowSimpleMessageBox(
@@ -52,7 +55,8 @@ public class ProcessamentoCriaturas {
                     "Info",
                     "Quantidade de criaturas acima do máximo. Máximo: 200 criaturas",
                     null);
-            return null;
+            respostaProcessamento.setStatus(0);
+            return respostaProcessamento;
         }
 
         initSDL();
@@ -65,9 +69,10 @@ public class ProcessamentoCriaturas {
 
         mostrarResultadosFinais(criaturas);
 
-
+        respostaProcessamento.setStatus(notRobbedCreatures);
+        respostaProcessamento.setCriaturas(criaturas);
         SDL_Quit();
-        return criaturas;
+        return respostaProcessamento;
     }
     private static void initSDL() {
         int result = SDL_Init(SDL_INIT_EVERYTHING);
